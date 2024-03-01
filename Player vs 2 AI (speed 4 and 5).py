@@ -12,19 +12,6 @@ BLUE=(0,0,255)
 LIGHT_BLUE=(0,226,226)
 PURPLE=(128,0,90)
 COLOR=(color_x,color_y,color_z)
-RED = (255, 0, 0)
-ORANGE = (255, 127, 0)
-YELLOW = (255, 255, 0)
-GREEN = (0, 255, 0)
-DARK_BLUE = (0, 0, 255)
-INDIGO = (46, 43, 95)
-VIOLET = (139, 0, 255)
-square_x=50
-square_y=50
-enemy_square_x=1000
-enemy_square_y=350
-player_rect=pygame.Rect(square_x,square_y,50,50)
-enemy_rect=pygame.Rect(enemy_square_x,enemy_square_y,50,50)
 display_score_y=0
 clock_tick=132
 counter=0
@@ -153,38 +140,50 @@ def check_score(score_y):
         display_score_y=60
     return display_score_y
 
-def player_icon(screen, x, y):
-    pygame.draw.rect(screen,COLOR, [square_x,square_y,50,50])
-
-def player_icon_hitbox(screen,x,y):
+def enemy_icon_1(screen, x, y):
+    pygame.draw.rect(screen,COLOR, [enemy_square_x,enemy_square_y,50,50])
+def enemy_icon1_hitbox(screen,x,y):
     # left  
-    pygame.draw.line(screen, BLACK, [square_x, square_y], [square_x, square_y+50], 1)
+    pygame.draw.line(screen, GREEN, [enemy_square_x, enemy_square_y], [enemy_square_x, enemy_square_y+50], 5)
     # right
-    pygame.draw.line(screen, BLACK, [square_x+50, square_y], [square_x+50, square_y+50], 1)
+    pygame.draw.line(screen, GREEN, [enemy_square_x+50, enemy_square_y], [enemy_square_x+50, enemy_square_y+50], 5)
     # top
-    pygame.draw.line(screen, BLACK, [square_x, square_y], [square_x+50, square_y], 5)
+    pygame.draw.line(screen, GREEN, [enemy_square_x, enemy_square_y], [enemy_square_x+50, enemy_square_y], 5)
     # bottom
-    pygame.draw.line(screen, BLACK, [square_x+50, square_y+50], [square_x, square_y+50], 1)
+    pygame.draw.line(screen, GREEN, [enemy_square_x+50, enemy_square_y+50], [enemy_square_x, enemy_square_y+50], 5)
+enemy_square_x=50
+enemy_square_y=50
 
-def enemy_icon(screen,x,y):
-    pygame.draw.rect(screen,GREEN, [enemy_square_x,enemy_square_y,50,50])
+def enemy_icon_2(screen, x, y):
+    pygame.draw.rect(screen,COLOR, [enemy_square_x2,enemy_square_y2,50,50])
+def enemy_icon2_hitbox(screen,x,y):
+    # left  
+    pygame.draw.line(screen, GREEN, [enemy_square_x, enemy_square_y], [enemy_square_x, enemy_square_y+50], 5)
+    # right
+    pygame.draw.line(screen, GREEN, [enemy_square_x+50, enemy_square_y], [enemy_square_x+50, enemy_square_y+50], 5)
+    # top
+    pygame.draw.line(screen, GREEN, [enemy_square_x, enemy_square_y], [enemy_square_x+50, enemy_square_y], 5)
+    # bottom
+    pygame.draw.line(screen, GREEN, [enemy_square_x+50, enemy_square_y+50], [enemy_square_x, enemy_square_y+50], 5)
+enemy_square_x2=100
+enemy_square_y2=100
 
-def enemy_icon_hitbox(screen,x,y):
+def player_icon(screen,x,y):
+    pygame.draw.rect(screen,GREEN, [player_square_x,player_square_y,50,50])
+def player_icon_hitbox(screen,x,y):
     # left
-    pygame.draw.line(screen,COLOR,[enemy_square_x,enemy_square_y],[enemy_square_x,enemy_square_y+50],1)
+    pygame.draw.line(screen,GREEN,[player_square_x,player_square_y],[player_square_x,player_square_y+50],5)
     # right
-    pygame.draw.line(screen,COLOR,[enemy_square_x+50,enemy_square_y],[enemy_square_x+50,enemy_square_y+50],1)
+    pygame.draw.line(screen,GREEN,[player_square_x+50,player_square_y],[player_square_x+50,player_square_y+50],5)
     # top
-    pygame.draw.line(screen,COLOR,[enemy_square_x,enemy_square_y],[enemy_square_x+50,enemy_square_y],1)
+    pygame.draw.line(screen,GREEN,[player_square_x,player_square_y],[player_square_x+50,player_square_y],5)
     # bottom
-    pygame.draw.line(screen,COLOR,[enemy_square_x+50,enemy_square_y+50],[enemy_square_x,enemy_square_y+50],1)
+    pygame.draw.line(screen,GREEN,[player_square_x+50,player_square_y+50],[player_square_x,player_square_y+50],5)
+player_square_x=1000
+player_square_y=350
+
 # Setup
 pygame.init()
-# length_of_screen=1366
-# height_of_screen=768
-# Set the width and height of the screen [width,height]
-# size = [length_of_screen, height_of_screen]
-# screen = pygame.display.set_mode(size)
 screen=pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 # Loop until the user clicks the close button.
 done = False
@@ -194,10 +193,8 @@ clock = pygame.time.Clock()
 # Hide the mouse cursor
 pygame.mouse.set_visible(0)
 # Speed in pixels per frame
-square_change_x=0
-square_change_y=0
-enemy_square_change_y=0
-enemy_square_change_x=0
+player_square_change_x=0
+player_square_change_y=0
 color_game_tick=0
 # Current position
 x_coord=0
@@ -205,6 +202,7 @@ y_coord=0
 score_x=0
 score_y=0
 array=[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+array2=[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 # -------- Main Program Loop -----------
 while not done:
     # --- Event Processing --- 
@@ -214,67 +212,85 @@ while not done:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 done=True
-
-    if enemy_square_y>square_y:
-        square_y=square_y+4
-    if enemy_square_y<square_y:
-        square_y=square_y-4
-    if enemy_square_x>square_x:
-        square_x=square_x+4
-    if enemy_square_x<square_x:
-        square_x=square_x-4
-
-# track key inputs
+                # User pressed down on the key 'escape'
+    # player movement
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_a:
-            enemy_square_change_x=-10
+            player_square_change_x=-10
         elif event.key == pygame.K_d:
-            enemy_square_change_x=10
+            player_square_change_x=10
         elif event.key == pygame.K_w:
-            enemy_square_change_y=-10
+            player_square_change_y=-10
         elif event.key == pygame.K_s:
-            enemy_square_change_y=10
-
+            player_square_change_y=10
     if event.type==pygame.KEYDOWN:    
         if event.key == pygame.K_LEFT:
-            enemy_square_change_x=-10
+            player_square_change_x=-10
         elif event.key == pygame.K_RIGHT:
-            enemy_square_change_x=10
+            player_square_change_x=10
         elif event.key == pygame.K_UP:
-            enemy_square_change_y=-10
+            player_square_change_y=-10
         elif event.key == pygame.K_DOWN:
-            enemy_square_change_y=10
-
-    # User let up on a key
-    if event.type == pygame.KEYUP:
+            player_square_change_y=10
+    elif event.type == pygame.KEYUP:
         if event.key == pygame.K_a or event.key == pygame.K_d:
-            enemy_square_change_x = 0
+            player_square_change_x = 0
         elif event.key == pygame.K_w or event.key == pygame.K_s:
-            enemy_square_change_y = 0
+            player_square_change_y = 0
         elif event.key == pygame.K_LEFT or event.key==pygame.K_RIGHT:
-            square_change_x=0
+            player_square_change_x=0
         elif event.key==pygame.K_UP or event.key==pygame.K_DOWN:
-            square_change_y=0
+            player_square_change_y=0
+    if enemy_square_x>player_square_x:
+        enemy_square_x=enemy_square_x-4
+    if enemy_square_y>player_square_y:
+        enemy_square_y=enemy_square_y-4
+    if enemy_square_x<player_square_x:
+        enemy_square_x=enemy_square_x+4
+    if enemy_square_y<player_square_y:
+        enemy_square_y=enemy_square_y+4
 
-# if the key events are randomised
-        # random_choice=random.choice(array)
-        # if random_choice == 1:
-        #     enemy_square_change_x=0
-        #     enemy_square_change_y=0
+        
+    if enemy_square_x2>player_square_x:
+        enemy_square_x2=enemy_square_x2-5
+    if enemy_square_y2>player_square_y:
+        enemy_square_y2=enemy_square_y2-5
+    if enemy_square_x2<player_square_x:
+        enemy_square_x2=enemy_square_x2+5
+    if enemy_square_y2<player_square_y:
+        enemy_square_y2=enemy_square_y2+5
 
-    square_x=square_x+square_change_x
-    if square_x>=1250:
-        square_x=1250
-    if square_x<=50:
-        square_x=50
-    square_y=square_change_y+square_y
-    if square_y>=500:
-        square_y=500
-    if square_y<=50:
-        square_y=50
+    # random__choice=random.choice(array2)
+    # if random__choice==1:
+    #     if enemy_square_x2>player_square_x:
+    #         enemy_square_x2=(enemy_square_x2-player_square_x)//2+player_square_x
+    #     if enemy_square_y2>player_square_y:
+    #         enemy_square_y2=(enemy_square_y2-player_square_y)//2+player_square_y
+    #     if enemy_square_x2<player_square_x:
+    #         enemy_square_x2=(player_square_x-enemy_square_x2)//2+enemy_square_x2
+    #     if enemy_square_y2<player_square_y:
+    #         enemy_square_y2=(player_square_y-enemy_square_y2)//2+enemy_square_y2
 
-    enemy_square_y=enemy_square_y+enemy_square_change_y
-    enemy_square_x=enemy_square_x+enemy_square_change_x
+    random_choice=random.choice(array)
+    if random_choice == 1:
+        player_square_change_x=0
+        player_square_change_y=0
+
+    # check if the icons are within the borders
+    player_square_x=player_square_x+player_square_change_x
+    player_square_y=player_square_change_y+player_square_y
+
+
+    if player_square_x>=1250:
+        player_square_x=1250
+    if player_square_x<=50:
+        player_square_x=50
+    if player_square_y>=500:
+        player_square_y=500
+    if player_square_y<=50:
+        player_square_y=50
+    
+
     if enemy_square_y<=50:
         enemy_square_y=51
     if enemy_square_x>=1250:
@@ -284,9 +300,67 @@ while not done:
     if enemy_square_y>=500:
         enemy_square_y=500
 
-
-
-# drawing the grid and adjustments
+    
+    if enemy_square_x2<=50:
+        enemy_square_x2=51
+    if enemy_square_x2>=1250:
+        enemy_square_x2=1250
+    if enemy_square_y2<=50:
+        enemy_square_y2=51
+    if enemy_square_y2>=1250:
+        enemy_square_y2=1250
+    
+    
+    
+    
+    
+    if enemy_square_x>=player_square_x and enemy_square_x<=player_square_x+50:
+        if enemy_square_y>=player_square_y and enemy_square_y<=player_square_y+50:
+            score_x+=1
+            player_square_x=1000
+            player_square_y=350
+            enemy_square_x=50
+            enemy_square_y=50
+            enemy_square_x2=100
+            enemy_square_y2=100
+    if enemy_square_x+50>=player_square_x and enemy_square_x+50<=player_square_x+50:
+        if enemy_square_y>=player_square_y and enemy_square_y<=player_square_y+50:
+            score_x+=1
+            player_square_x=1000
+            player_square_y=350
+            enemy_square_x=50
+            enemy_square_y=50
+            enemy_square_x2=100
+            enemy_square_y2=100
+    if enemy_square_x+50>=player_square_x and enemy_square_x+50<=player_square_x+50:
+        if enemy_square_y+50>=player_square_y and enemy_square_y+50<=player_square_y+50:
+            score_x+=1
+            player_square_x=1000
+            player_square_y=350
+            enemy_square_x=50
+            enemy_square_y=50
+            enemy_square_x2=100
+            enemy_square_y2=100
+    if enemy_square_x>=player_square_x and enemy_square_x<=player_square_x+50:
+        if enemy_square_y+50>=player_square_y and enemy_square_y+50<=player_square_y+50:
+            score_x+=1
+            player_square_x=1000
+            player_square_y=350
+            enemy_square_x=50
+            enemy_square_y=50
+            enemy_square_x2=100
+            enemy_square_y2=100
+    if enemy_square_x2>=player_square_x and enemy_square_x2<=player_square_x+50:
+        if enemy_square_y2+50>=player_square_y and enemy_square_y2+50<=player_square_y+50:
+            score_x+=1
+            player_square_x=1000
+            player_square_y=350
+            enemy_square_x=50
+            enemy_square_y=50
+            enemy_square_x2=100
+            enemy_square_y2=100
+    
+    
     screen.fill(BLACK)
     for l in range(50,1350,50):
         pygame.draw.line(screen,COLOR,[l,0],[l,550],1)
@@ -339,39 +413,11 @@ while not done:
     
     # draw the player icons
     player_icon(screen, x_coord, y_coord)
-    enemy_icon(screen, x_coord, y_coord)
+    enemy_icon_1(screen, x_coord, y_coord)
+    enemy_icon_2(screen, x_coord, y_coord)
     # player_icon_hitbox(screen, x_coord, y_coord)
-    # enemy_icon_hitbox(screen, x_coord, y_coord)
-    # check if the squares are touching
+    # enemy_icon1_hitbox(screen, x_coord, y_coord)
 
-    if enemy_square_x>=square_x and enemy_square_x<=square_x+50:
-        if enemy_square_y>=square_y and enemy_square_y<=square_y+50:
-            score_x+=1
-            square_x=50
-            square_y=50
-            enemy_square_x=1000
-            enemy_square_y=350
-    if enemy_square_x+50>=square_x and enemy_square_x+50<=square_x+50:
-        if enemy_square_y>=square_y and enemy_square_y<=square_y+50:
-            score_x+=1
-            square_x=50
-            square_y=50
-            enemy_square_x=1000
-            enemy_square_y=350
-    if enemy_square_x+50>=square_x and enemy_square_x+50<=square_x+50:
-        if enemy_square_y+50>=square_y and enemy_square_y+50<=square_y+50:
-            score_x+=1
-            square_x=50
-            square_y=50
-            enemy_square_x=1000
-            enemy_square_y=350
-    if enemy_square_x>=square_x and enemy_square_x<=square_x+50:
-        if enemy_square_y+50>=square_y and enemy_square_y+50<=square_y+50:
-            score_x+=1
-            square_x=50
-            square_y=50
-            enemy_square_x=1000
-            enemy_square_y=350
     score_y+=1
     # changing player score
 
@@ -399,3 +445,10 @@ while not done:
 
 # Close the window and quit.
 pygame.quit()
+
+# Extras:
+# if the key events are randomised
+        # random_choice=random.choice(array)
+        # if random_choice == 1:
+        #     player_square_change_x=0
+        #     player_square_change_y=0
